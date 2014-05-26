@@ -15,6 +15,7 @@
 (function () {
 
     var is_focused = true;
+    var abc = "";
 
     function freezeHeaders() {
 
