@@ -1,4 +1,13 @@
-﻿(function () {
+﻿// ==UserScript==
+// @name       Kanban improve
+// @namespace  http://tfs2010.it.volvo.net/
+// @version    0.1
+// @description  Does the usability omprovements over standard SharePoint Kanban board
+// @match      http://tfs2010.it.volvo.net:8080/tfs/Global/SEGOT-eCom-VolvoPentaShop/PentaBusiness/_backlogs/board
+// @copyright  2014+, Volvo IT
+// ==/UserScript==a
+
+(function () {
 
     var customStyle =
     ".board-tile.cr {background-color: #3276b1; border-color: #285e8e; color: white} " +

@@ -8,10 +8,6 @@
 // @copyright  2014+, Volvo IT
 // ==/UserScript==a
 
-// TODOs:
-// Difference on Business board between AT and CR
-// Difference on Scrum board between AT and Bug
-
 (function () {
 
     var is_focused = true;
