@@ -60,28 +60,24 @@
 
                 if (itemClassification == 'CRExpedited' || itemClassification == 'ATExpedited') {
                     $itemElm.addClass('expediter');
-                    return;
                 } else {
                     $itemElm.removeClass('expediter');
                 }
 
                 if (itemIsBlocked == "Yes") {
                     $itemElm.addClass('blocked');
-                    return;
                 } else {
                     $itemElm.removeClass('blocked');
                 }
 
                 if (itemClassification == 'CR') {
                     $itemElm.addClass('cr');
-                    return;
                 } else {
                     $itemElm.removeClass('cr');
                 }
 
                 if (itemClassification == 'AT') {
                     $itemElm.addClass('at');
-                    return;
                 } else {
                     $itemElm.removeClass('at');
                 }
