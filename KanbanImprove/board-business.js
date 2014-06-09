@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
-// @name       Kanban improve
-// @namespace  http://tfs2010.it.volvo.net/
+// @name       Kanban improve (Business-specific)
+// @namespace  http://tfs2010.it.volvo.net/b
 // @version    0.1
 // @description  Does the usability omprovements over standard SharePoint Kanban board
 // @match      http://tfs2010.it.volvo.net:8080/tfs/Global/SEGOT-eCom-VolvoPentaShop/PentaBusiness/_backlogs/board
