@@ -23,8 +23,9 @@
 
     function pretendTilesAreLikeInKanbanBoard() {
 
+        setTimeout(pretendTilesAreLikeInKanbanBoard, 1000);
+
         if (!isFocused || $("#taskboard-table").length < 1) {
-            setTimeout(pretendTilesAreLikeInKanbanBoard, 1000);
             return;
         }
 
@@ -32,8 +33,16 @@
             .each(function () {
                 var $elm = $(this);
                 var itemId = $elm.attr("id").slice("taskboard-table_p".length);
-                console.log("Kanban improve (Scrum): item #" + itemId);
                 $elm.closest("tr")
+                	.addClass("board-tile")
+                	.attr("data-item-id", itemId);
+            });
+
+        $(".tbTile")
+            .each(function () {
+                var $elm = $(this);
+                var itemId = $elm.attr("id").slice("tile-".length);
+                $elm.find(".tbTileContent")
                 	.addClass("board-tile")
                 	.attr("data-item-id", itemId);
             });
@@ -44,11 +53,20 @@
         pretendTilesAreLikeInKanbanBoard();
 
         addGlobalStyle(
-            ".board-tile.cr {background-color: #3276b1; border-color: #285e8e; color: white} " +
-            ".board-tile.at {color: gray} " +
-            ".board-tile.expediter {background-color: #ed9c28; border-color: #d58512; color: white} " +
-            ".board-tile.blocked {background-color: #d2322d; border-color: #ac2925; color: white} "
+            ".board-tile.cr { } " +
+            ".board-tile.at { } " +
+            ".taskboard-row.board-tile.expediter {background-color: #fcf8e3; border-color: #d58512;} " +
+            ".tbTile .tbTileContent.board-tile.expediter {background-color: #ed9c28; border-color: #d58512;} " +
+            ".tbTile .tbTileContent.board-tile.expediter .witTitle, .tbTile .tbTileContent.board-tile.expediter .witRemainingWork, .tbTile .tbTileContent.board-tile.expediter .witAssignedTo  { color: white} " +
+
+            ".tbTile .tbTileContent.board-tile.blocked {background-color: #d2322d; border-color: #ac2925; } " +
+            ".tbTile .tbTileContent.board-tile.blocked .witTitle, .tbTile .tbTileContent.board-tile.blocked .witRemainingWork, .tbTile .tbTileContent.board-tile.blocked .witAssignedTo { color: white} " +
+            ".taskboard-row.board-tile.blocked {background-color: #f2dede; } "
         );
+
+        $(window)
+            .focus(function () { isFocused = true; })
+            .blur(function () { isFocused = false; });
     });
 
 })(jQuery);

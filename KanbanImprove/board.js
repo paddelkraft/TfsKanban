@@ -24,14 +24,14 @@
 
     function improveBoard() {
 
-        if (!is_focused || $(".content-container.row.content").length < 1) {
+        if (!is_focused || ($(".board-tile").length < 1)) {
             setTimeout(improveBoard, 1000);
             return;
         }
 
         var allIds = [];
 
-        var $allExpeditorItems = $(".board-tile")
+        $(".board-tile")
             .each(function () {
                 var itemElm = $(this);
                 allIds.push(itemElm.data('item-id'));
@@ -51,20 +51,20 @@
 
                 var $itemElm = $(".board-tile[data-item-id=" + itemId + "]");
 
-                setClassBasedOnCondition($itemElm, function () {
-                    itemClassification == 'CRExpedited' || itemClassification == 'ATExpedited' },
+                setClassBasedOnExpectation($itemElm,
+                    ['CRExpedited', 'ATExpedited'], itemClassification,
                     'expediter');
 
-                setClassBasedOnCondition($itemElm, function () {
-                    itemIsBlocked == "Yes" },
+                setClassBasedOnExpectation($itemElm,
+                    "Yes", itemIsBlocked,
                     'blocked');
 
-                setClassBasedOnCondition($itemElm, function () {
-                    itemClassification == 'CR' }, 
+                setClassBasedOnExpectation($itemElm,
+                    'CR', itemClassification,
                     'cr');
 
-                setClassBasedOnCondition($itemElm, function () {
-                    itemClassification == 'AT' }, 
+                setClassBasedOnExpectation($itemElm,
+                    'AT', itemClassification,
                     'at');
 
             });
@@ -73,8 +73,19 @@
         setTimeout(improveBoard, 10000);
     }
 
-    function setClassBasedOnCondition($elm, conditionChecker, className) {
-        if (conditionChecker()) {
+    function setClassBasedOnExpectation($elm, expected, actual, className) {
+
+        var evaluationResult = false;
+
+        if ($.isArray(expected)) {
+            $.each(expected, function (_, elm) {
+                evaluationResult |= elm == actual;
+            });
+        } else {
+            evaluationResult = expected == actual;
+        }
+
+        if (evaluationResult) {
             $elm.addClass(className);
         } else {
             $elm.removeClass(className);
@@ -83,9 +94,7 @@
 
     $(function () {
 
-        if ($(".agile-board").length > 0) {
-            improveBoard();
-        }
+        improveBoard();
 
         //freezeHeaders();
 
