@@ -30,13 +30,14 @@
 
         console.log("Kanban improve: item ids: " + allIds);
 
+        var oDataValidationToken = $('[name=__RequestVerificationToken]').val();
 
         $.post(
             "//" + window.location.host + "/tfs/Global/_api/_wit/pageWorkItems",
             {
                 workItemIds: "" + allIds,
                 fields: "System.Id,System.State,System.TeamProject,System.Title,System.WorkItemType,Volvo.ecomTeam,Microsoft.VSTS.CMMI.Blocked,Volvo.Common.CaseOrigin,Volvo.Common.CaseOriginNumber",
-                __RequestVerificationToken: "HEe_gvHuFM-KTkUMtR1tOgbMwjbCxiAitzOsZHtXoa15x0S_QjahxLzq-Qcb39IaGitJ1xE4ubv_pSD7wZwD0ztin6vQcZYCDniiPmg3F9VEtbVLJxW3jDUDnjlfj5cDFe-w4oJhwZP2LCP_5pWiq2DcCD41"
+                __RequestVerificationToken: oDataValidationToken
             },
             function (data) {
                 $.each(data.rows, function (_, item) {
