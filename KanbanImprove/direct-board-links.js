@@ -11,7 +11,8 @@ addHubGroupLink("Business Board", "http://tfs2010.it.volvo.net:8080/tfs/Global/S
 addHubGroupLink("Team Board", "http://tfs2010.it.volvo.net:8080/tfs/Global/SEGOT-eCom-VolvoPentaShop/PentaTeam/_backlogs/board");
 addHubGroupLink("Definition Of Done", "http://tfs2010.it.volvo.net/sites/Global/SEGOT-eCom-VolvoPentaShop/Wiki%20Pages/Definition%20Of%20Done.aspx" );
 addHubGroupLink("Process Information","http://tfs2010.it.volvo.net/sites/Global/SEGOT-eCom-VolvoPentaShop/Kanban/Forms/AllItems.aspx?RootFolder=%2Fsites%2FGlobal%2FSEGOT%2DeCom%2DVolvoPentaShop%2FKanban%2FProcess%20and%20Guidlines&FolderCTID=0x012000C1829E356508ED43BF1B0C3254A4C219&View={18BD1F16-2726-4EBC-8373-6D1A4C2DA3BF}");
-
+addHubGroupLink("Enhancement planning","http://tfs2010.it.volvo.net/sites/Global/SEGOT-eCom-VolvoPentaShop/Kanban/eCom-Penta-IAT-Enhancement-Planning.xlsx");
+//addHubGroupLink("caption", "url");
 
 function addHubGroupLink(caption, url){
     var link = document.createElement('li');
