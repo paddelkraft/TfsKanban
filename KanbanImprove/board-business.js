@@ -35,13 +35,12 @@
 
         $('[data-case-id]')
             .mouseenter(function (evt) {
-                var caseId = $(evt.target).attr('data-case-id');
+                var caseId = $(evt.target).attr('data-case-id') || $(evt.target).closest('[data-case-id]').attr('data-case-id');
                 console.log('Mouse enter... case #:' + caseId)
 
                 $("[data-case-id!='" + caseId + "']").addClass('pale')
             })
             .mouseleave(function (evt) {
-                var caseId = $(evt.target).attr('data-case-id');
                 $("[data-case-id]").removeClass('pale')
             });
     }
