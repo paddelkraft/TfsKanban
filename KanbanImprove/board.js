@@ -13,15 +13,6 @@
 
     var is_focused = true;
 
-    //function freezeHeaders() {
-
-    //    if (!is_focused || $(".content-container.row.content").length < 1) {
-    //        setTimeout(freezeHeaders, 1000);
-    //        return;
-    //    }
-
-    //}
-
     function improveBoard() {
 
         if (!is_focused || ($(".board-tile").length < 1)) {
@@ -39,38 +30,44 @@
 
         console.log("Kanban improve: item ids: " + allIds);
 
-        $.each(allIds, function (itemIndex, itemId) {
-            console.log("Kanban improve: querying item: " + itemId);
 
-            $.get("//" + window.location.host + "/tfs/Global/_api/_wit/workitems?ids=" + itemId, function (data) {
+        $.post(
+            "//" + window.location.host + "/tfs/Global/_api/_wit/pageWorkItems",
+            {
+                workItemIds: "" + allIds,
+                fields: "System.Id,System.State,System.TeamProject,System.Title,System.WorkItemType,Volvo.ecomTeam,Microsoft.VSTS.CMMI.Blocked,Volvo.Common.CaseOrigin,Volvo.Common.CaseOriginNumber",
+                __RequestVerificationToken: "HEe_gvHuFM-KTkUMtR1tOgbMwjbCxiAitzOsZHtXoa15x0S_QjahxLzq-Qcb39IaGitJ1xE4ubv_pSD7wZwD0ztin6vQcZYCDniiPmg3F9VEtbVLJxW3jDUDnjlfj5cDFe-w4oJhwZP2LCP_5pWiq2DcCD41"
+            },
+            function (data) {
+                $.each(data.rows, function (_, item) {
+                    var itemId = item[0];
+                    var itemIsBlocked = item[6] || "No";
+                    var itemClassification = item[5] || "";
+                    var caseId = (item[7] || "") + "|" + (item[8] || "");
 
-                var itemIsBlocked = data.__wrappedArray[0].fields["10160"] || "No";
-                var itemClassification = data.__wrappedArray[0].fields["10986"] || "";
+                    var $itemElm = $(".board-tile[data-item-id=" + itemId + "]");
 
-                console.log("Kanban improve: item " + itemId + " is blocked: " + itemIsBlocked + "; classification: " + itemClassification);
+                    $itemElm.attr('data-case-id', caseId);
 
-                var $itemElm = $(".board-tile[data-item-id=" + itemId + "]");
+                    setClassBasedOnExpectation($itemElm,
+                        ['CRExpedited', 'ATExpedited'], itemClassification,
+                        'expediter');
 
-                setClassBasedOnExpectation($itemElm,
-                    ['CRExpedited', 'ATExpedited'], itemClassification,
-                    'expediter');
+                    setClassBasedOnExpectation($itemElm,
+                        "Yes", itemIsBlocked,
+                        'blocked');
 
-                setClassBasedOnExpectation($itemElm,
-                    "Yes", itemIsBlocked,
-                    'blocked');
+                    setClassBasedOnExpectation($itemElm,
+                        'CR', itemClassification,
+                        'cr');
 
-                setClassBasedOnExpectation($itemElm,
-                    'CR', itemClassification,
-                    'cr');
-
-                setClassBasedOnExpectation($itemElm,
-                    'AT', itemClassification,
-                    'at');
-
+                    setClassBasedOnExpectation($itemElm,
+                        'AT', itemClassification,
+                        'at');
+                });
             });
-        });
 
-        setTimeout(improveBoard, 10000);
+        setTimeout(improveBoard, 5000);
     }
 
     function setClassBasedOnExpectation($elm, expected, actual, className) {
@@ -95,8 +92,6 @@
     $(function () {
 
         improveBoard();
-
-        //freezeHeaders();
 
         $(window)
             .focus(function () { is_focused = true; })
