@@ -25,7 +25,7 @@
         $(".board-tile")
             .each(function () {
                 var itemElm = $(this);
-                allIds.push(itemElm.data('item-id'));
+                allIds.push(itemElm.attr('data-item-id'));
             });
 
         console.log("Kanban improve: item ids: " + allIds);
